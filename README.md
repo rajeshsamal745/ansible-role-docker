@@ -1,38 +1,103 @@
-Role Name
-=========
+import pypandoc
+from pathlib import Path
 
-A brief description of the role goes here.
+md = r'''# 🚀 Enterprise Multi-OS Docker Deployment with Ansible on AWS
 
-Requirements
-------------
+> **Production-style Ansible automation project demonstrating AWS Dynamic Inventory, reusable roles, multi-OS configuration management, idempotent deployments, and automated validation.**
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+[![Ansible](https://img.shields.io/badge/Ansible-2.21-red?logo=ansible)](https://www.ansible.com/)
+[![AWS](https://img.shields.io/badge/AWS-EC2-orange?logo=amazon-aws)](https://aws.amazon.com/ec2/)
+[![Docker](https://img.shields.io/badge/Docker-29.8.2-2496ED?logo=docker)](https://www.docker.com/)
+[![Linux](https://img.shields.io/badge/Linux-Multi--OS-FCC624?logo=linux)](https://www.linux.org/)
+[![IaC](https://img.shields.io/badge/Infrastructure%20as%20Code-Ansible-black?logo=ansible)](https://www.ansible.com/)
 
-Role Variables
---------------
+---
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## 📌 Project Overview
 
-Dependencies
-------------
+This project automates the **installation, configuration, and validation of Docker Engine across heterogeneous AWS EC2 environments** using a reusable Ansible role.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Instead of maintaining a static inventory or writing separate playbooks for every operating system, the project uses:
 
-Example Playbook
-----------------
+- **AWS EC2 Dynamic Inventory** for automatic host discovery
+- **AWS tags** for environment and role-based grouping
+- **Reusable Ansible roles**
+- **OS-aware task execution**
+- **Official Docker repositories**
+- **Privilege escalation**
+- **Idempotent configuration**
+- **Automated service and version validation**
+- **Dependency management through `requirements.yml`**
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The environment was validated across **four AWS EC2 instances**:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+| Platform | Role |
+|---|---|
+| Ubuntu | Docker host |
+| Ubuntu | Docker host |
+| Debian | Docker host |
+| RHEL 10.2 | Docker host |
 
-License
--------
+All four hosts were successfully configured and validated with **Docker Engine 29.8.2**.
 
-BSD
+---
 
-Author Information
-------------------
+# 🏗️ Architecture
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+```text
+                         ┌─────────────────────────┐
+                         │       AWS Account       │
+                         │     ap-southeast-2      │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │      EC2 Instances      │
+                         │                         │
+                         │  Ubuntu × 2             │
+                         │  Debian × 1             │
+                         │  RHEL 10.2 × 1          │
+                         └────────────┬────────────┘
+                                      │
+                                      │ AWS Tags
+                                      ▼
+                         ┌─────────────────────────┐
+                         │ AWS Dynamic Inventory   │
+                         │      aws_ec2.yml        │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │     Ansible Controller  │
+                         │       WSL / Linux      │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │     role_docker group   │
+                         └────────────┬────────────┘
+                                      │
+                     ┌────────────────┴────────────────┐
+                     │                                 │
+                     ▼                                 ▼
+             Debian Family                       RedHat Family
+             debian.yml                          redhat.yml
+                     │                                 │
+                     ▼                                 ▼
+              Docker CE Repo                    Docker CE Repo
+                     │                                 │
+                     └────────────────┬────────────────┘
+                                      ▼
+                         ┌─────────────────────────┐
+                         │      Docker Engine      │
+                         │        29.8.2           │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │ Automated Validation    │
+                         │                         │
+                         │ Service Status          │
+                         │ Docker Version          │
+                         │ docker info             │
+                         └─────────────────────────┘
