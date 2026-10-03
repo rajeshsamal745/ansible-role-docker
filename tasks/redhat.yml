@@ -1,0 +1,29 @@
+---
+- name: Remove old Docker repository configuration
+  ansible.builtin.file:
+    path: /etc/yum.repos.d/docker-ce-stable.repo
+    state: absent
+
+- name: Add official Docker CE repository
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/rhel/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+    force: true
+
+- name: Install Docker Engine
+  ansible.builtin.dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+- name: Enable and start Docker
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true

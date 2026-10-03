@@ -1,0 +1,25 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Ansible
+*.retry
+.retry/
+*.log
+
+# Secrets
+*.pem
+*.key
+.env
+.env.*
+
+# Ansible Vault
+*.vault
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

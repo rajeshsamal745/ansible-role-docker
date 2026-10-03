@@ -1,0 +1,35 @@
+---
+galaxy_info:
+  author: rajeshsamal745
+  description: >
+    Ansible role to install and configure Docker Engine
+    across Debian and RedHat based Linux systems.
+  company: ""
+  license: MIT
+  min_ansible_version: "2.15"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble
+
+    - name: Debian
+      versions:
+        - bookworm
+        - trixie
+
+    - name: EL
+      versions:
+        - "9"
+        - "10"
+
+  galaxy_tags:
+    - docker
+    - containers
+    - devops
+    - aws
+    - automation
+    - linux
+
+dependencies: []

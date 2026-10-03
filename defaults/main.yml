@@ -1,0 +1,20 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults/main.yml for docker-role-demo
+
+# The state of the Docker service (started, stopped, restarted)
+docker_service_state: started
+
+# Whether the Docker service should start automatically on system boot
+docker_service_enabled: true
+
+# System users to add to the 'docker' group so they can run containers without sudo
+docker_users: []
+
+# The release channel to install from (stable, nightly, test)
+docker_release_channel: stable
+
+# Architecture for package downloads (default covers standard 64-bit cloud instances)
+docker_architecture: amd64
+
+docker_package_state: present

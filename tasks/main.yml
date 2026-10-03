@@ -1,0 +1,8 @@
+---
+- name: Install Docker on Debian family
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: Install Docker on RedHat family
+  ansible.builtin.include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"

@@ -1,0 +1,9 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers/main.yml for docker-role-demo
+
+- name: Restart docker
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+  listen: "restart docker"
